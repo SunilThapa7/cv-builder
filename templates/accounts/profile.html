@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h1>Profile</h1>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Number of CVs:</strong> {{ cv_count }}</p>
+    <a href="{% url 'dashboard' %}">View Dashboard</a>
+</div>
+{% endblock %}

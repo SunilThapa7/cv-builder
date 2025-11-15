@@ -1,0 +1,48 @@
+/* Classic Template Styles */
+.preview-controls {
+    max-width: 210mm;
+    margin: 1rem auto;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.cv-preview {
+    max-width: 210mm;
+    min-height: 297mm;
+    margin: 2rem auto;
+    background: white;
+    padding: 20mm;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.classic-template .cv-header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px solid #2c3e50;
+    margin-bottom: 2rem;
+}
+
+.classic-template .cv-header h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.classic-template .job-title { color: #7f8c8d; font-size: 1.2rem; }
+
+.classic-template .cv-body { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
+.classic-template .cv-sidebar { border-right: 2px solid #ecf0f1; padding-right: 2rem; }
+.classic-template .cv-section { margin-bottom: 1.5rem; }
+.classic-template .cv-section h2 { color: #2c3e50; font-size: 1.2rem; margin-bottom: 0.8rem; text-transform: uppercase; border-bottom: 2px solid #3498db; padding-bottom: 0.3rem; }
+.classic-template .cv-section p { line-height: 1.6; margin-bottom: 0.5rem; }
+.classic-template .experience-item, .classic-template .education-item, .classic-template .project-item { margin-bottom: 1.5rem; }
+.classic-template .experience-item h3, .classic-template .education-item h3, .classic-template .project-item h3 { color: #2c3e50; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.classic-template .company, .classic-template .technologies { color: #7f8c8d; font-size: 0.9rem; font-style: italic; }
+
+@media print {
+    body { background: white; }
+    .navbar, .footer, .preview-controls { display: none !important; }
+    .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
+    @page { size: A4; margin: 15mm; }
+}

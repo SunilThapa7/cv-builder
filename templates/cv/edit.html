@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit CV{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Edit CV: {{ cv.title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-section">
+            <h2>Basic Information</h2>
+            {{ form.title.errors }}
+            <label>CV Title *</label>
+            {{ form.title }}
+            
+            {{ form.template.errors }}
+            <label>Template *</label>
+            {{ form.template }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Personal Information</h2>
+            {{ form.full_name.errors }}
+            <label>Full Name *</label>
+            {{ form.full_name }}
+            
+            {{ form.job_title.errors }}
+            <label>Job Title</label>
+            {{ form.job_title }}
+            
+            {{ form.email.errors }}
+            <label>Email *</label>
+            {{ form.email }}
+            
+            {{ form.phone.errors }}
+            <label>Phone</label>
+            {{ form.phone }}
+            
+            {{ form.location.errors }}
+            <label>Location</label>
+            {{ form.location }}
+            
+            {{ form.links.errors }}
+            <label>Links (LinkedIn, GitHub, etc.)</label>
+            {{ form.links }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Summary</h2>
+            {{ form.summary.errors }}
+            <label>Professional Summary</label>
+            {{ form.summary }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Skills</h2>
+            {{ form.skills.errors }}
+            <label>Skills (comma-separated)</label>
+            {{ form.skills }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Experience</h2>
+            {{ form.experience.errors }}
+            <label>Work Experience (JSON format)</label>
+            {{ form.experience }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Education</h2>
+            {{ form.education.errors }}
+            <label>Education (JSON format)</label>
+            {{ form.education }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Projects</h2>
+            {{ form.projects.errors }}
+            <label>Projects (JSON format)</label>
+            {{ form.projects }}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

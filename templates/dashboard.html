@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>My CVs</h1>
+        <a href="{% url 'cv_create' %}" class="btn btn-primary">Create New CV</a>
+    </div>
+
+    {% if cvs %}
+    <div class="cv-list">
+        {% for cv in cvs %}
+        <div class="cv-card">
+            <div class="cv-info">
+                <h3>{{ cv.title }}</h3>
+                <p><strong>Template:</strong> {{ cv.template.name }}</p>
+                <p><strong>Last Updated:</strong> {{ cv.updated_at|date:"M d, Y" }}</p>
+            </div>
+            <div class="cv-actions">
+                <a href="{% url 'cv_edit' cv.id %}" class="btn-action btn-edit">Edit</a>
+                <a href="{% url 'cv_preview' cv.id %}" class="btn-action btn-view">Preview</a>
+                <a href="{% url 'cv_delete' cv.id %}" class="btn-action btn-delete" onclick="return confirm('Are you sure you want to delete this CV?')">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>You haven't created any CVs yet.</p>
+        <a href="{% url 'cv_create' %}" class="btn btn-primary">Create Your First CV</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

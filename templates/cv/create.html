@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Create CV{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Create New CV</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-section">
+            <h2>Basic Information</h2>
+            {{ form.title.errors }}
+            <label>CV Title *</label>
+            {{ form.title }}
+            
+            {{ form.template.errors }}
+            <label>Template *</label>
+            {{ form.template }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Personal Information</h2>
+            {{ form.full_name.errors }}
+            <label>Full Name *</label>
+            {{ form.full_name }}
+            
+            {{ form.job_title.errors }}
+            <label>Job Title</label>
+            {{ form.job_title }}
+            
+            {{ form.email.errors }}
+            <label>Email *</label>
+            {{ form.email }}
+            
+            {{ form.phone.errors }}
+            <label>Phone</label>
+            {{ form.phone }}
+            
+            {{ form.location.errors }}
+            <label>Location</label>
+            {{ form.location }}
+            
+            {{ form.links.errors }}
+            <label>Links (LinkedIn, GitHub, etc.)</label>
+            {{ form.links }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Summary</h2>
+            {{ form.summary.errors }}
+            <label>Professional Summary</label>
+            {{ form.summary }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Skills</h2>
+            {{ form.skills.errors }}
+            <label>Skills (comma-separated)</label>
+            {{ form.skills }}
+        </div>
+        
+        <div class="form-section">
+            <h2>Experience</h2>
+            {{ form.experience.errors }}
+            <label>Work Experience (JSON format)</label>
+            {{ form.experience }}
+            <small>Example: [{"company": "ABC Corp", "position": "Developer", "duration": "2020-2023", "description": "Developed features"}]</small>
+        </div>
+        
+        <div class="form-section">
+            <h2>Education</h2>
+            {{ form.education.errors }}
+            <label>Education (JSON format)</label>
+            {{ form.education }}
+            <small>Example: [{"institution": "University", "degree": "BS Computer Science", "duration": "2016-2020"}]</small>
+        </div>
+        
+        <div class="form-section">
+            <h2>Projects</h2>
+            {{ form.projects.errors }}
+            <label>Projects (JSON format)</label>
+            {{ form.projects }}
+            <small>Example: [{"name": "Project Name", "description": "Description", "technologies": "React, Node.js"}]</small>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create CV</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -38,6 +38,8 @@ A Django-based web application for creating professional CVs with multiple templ
 5. Run server
    ```powershell
    .\venv\Scripts\python manage.py runserver
+
+ Visit http://127.0.0.1:8000/  
    `
 ## 6. Screenshots
 
@@ -49,4 +51,3 @@ Example files:
 - static/img/tempalte_preview/preview_modern.png
 - static/img/template_preview/preview_minimal.png
 
-Visit http://127.0.0.1:8000/

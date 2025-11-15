@@ -46,6 +46,8 @@ A Django-based web application for creating professional CVs with multiple templ
 Example files:
 - static/img/screenshots/homepage.png
 - static/img/screenshots/dashboard.png
+- ![Dashboard](screenshots/dashboard.png)
+
 - static/img/screenshots/editor.png
 - static/img/template_preview/preview_classic.png
 - static/img/tempalte_preview/preview_modern.png

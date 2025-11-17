@@ -1,1 +1,1 @@
-web: gunicorn cv_builder.wsgi:application
+web: gunicorn cv_builder.wsgi:application --bind 0.0.0.0:$PORT

@@ -22,10 +22,20 @@
 .minimal-template .tech-stack { font-style: italic; font-size: 0.9rem; margin-top: 0.3rem; }
 
 @media print {
-    @page { size: A4; margin: 15mm; }
+    @page { size: A4; margin: 10mm; }
     body { background: white; color: #000; }
     .navbar, .footer, .preview-controls { display: none !important; }
-    .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
+    .cv-preview { max-width: 100%; margin: 0; padding: 10mm; box-shadow: none; }
+
+    /* Compact typography and spacing for single-page fit */
+    .minimal-template { line-height: 1.4; font-size: 0.95rem; }
+    .minimal-template .cv-header h1 { font-size: 1.6rem; margin-bottom: 0.2rem; }
+    .minimal-template .job-title { font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .minimal-template .contact-info, .minimal-template .links-info { font-size: 0.85rem; }
+    .minimal-template .cv-section { margin-bottom: 1rem; }
+    .minimal-template .cv-section h2 { font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .minimal-template .section-item { margin-bottom: 0.6rem; }
+    .minimal-template .item-date, .minimal-template .tech-stack { font-size: 0.85rem; }
 
     /* Avoid splitting items across pages */
     .minimal-template .cv-section,

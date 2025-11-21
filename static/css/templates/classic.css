@@ -41,16 +41,25 @@
 .classic-template .company, .classic-template .technologies { color: #7f8c8d; font-size: 0.9rem; font-style: italic; }
 
 @media print {
-    @page { size: A4; margin: 15mm; }
+    @page { size: A4; margin: 10mm; }
     body { background: white; color: #000; }
     .navbar, .footer, .preview-controls { display: none !important; }
-    .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
+    .cv-preview { max-width: 100%; margin: 0; padding: 10mm; box-shadow: none; }
 
     /* Keep two-column layout; just avoid awkward splits across pages */
     .classic-template .cv-section,
     .classic-template .experience-item,
     .classic-template .education-item,
     .classic-template .project-item { page-break-inside: avoid; break-inside: avoid; }
+
+    /* Compact typography and spacing */
+    .classic-template .cv-header { margin-bottom: 1.2rem; }
+    .classic-template .cv-header h1 { font-size: 2rem; margin-bottom: 0.3rem; }
+    .classic-template .job-title { font-size: 1rem; }
+    .classic-template .cv-section { margin-bottom: 1rem; }
+    .classic-template .cv-section h2 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .classic-template .experience-item, .classic-template .education-item, .classic-template .project-item { margin-bottom: 0.8rem; }
+    .classic-template .company, .classic-template .technologies { font-size: 0.85rem; }
 
     /* Remove print-unfriendly backgrounds and shadows */
     * { background: transparent !important; box-shadow: none !important; }

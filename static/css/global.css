@@ -350,6 +350,20 @@ footer {
 .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
 .form-actions .btn { flex: 1; text-align: center; }
 
+/* Subsection dividers for formset rows */
+.formset-item {
+    padding: 1rem;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    background: #fff;
+    margin-bottom: 1rem;
+}
+
+.formset-item + .formset-item {
+    margin-top: 0.5rem;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero-section h1 { font-size: 2rem; }

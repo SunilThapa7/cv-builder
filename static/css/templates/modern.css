@@ -1,4 +1,14 @@
 /* Modern Template Styles */
+/* Center the preview container */
+.cv-preview {
+    max-width: 210mm;
+    min-height: 297mm;
+    margin: 2rem auto;
+    background: white;
+    padding: 20mm;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
 .modern-template { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 .modern-template .cv-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; margin: -20mm -20mm 2rem -20mm; display: flex; justify-content: space-between; align-items: center; }
 .modern-template .cv-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
@@ -23,8 +33,8 @@
     .navbar, .footer, .preview-controls { display: none !important; }
     .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
 
-    /* Remove decorative backgrounds for print */
-    .modern-template .cv-header { margin: 0 0 2rem 0; background: none !important; color: #000; }
+    /* Remove decorative backgrounds for print and avoid header splitting */
+    .modern-template .cv-header { margin: 0 0 2rem 0; background: none !important; color: #000; page-break-after: avoid; break-after: avoid; }
     * { background: transparent !important; box-shadow: none !important; }
 
     /* Avoid splitting items across pages */

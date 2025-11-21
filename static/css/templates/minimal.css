@@ -1,4 +1,13 @@
 /* Minimal Template Styles */
+/* Center the preview container like Classic */
+.cv-preview {
+    max-width: 210mm;
+    min-height: 297mm;
+    margin: 2rem auto;
+    background: white;
+    padding: 20mm;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 .minimal-template { font-family: 'Courier New', Courier, monospace; color: #000; line-height: 1.5; }
 .minimal-template .cv-header { text-align: center; padding-bottom: 1rem; border-bottom: 1px solid #000; margin-bottom: 1.5rem; }
 .minimal-template .cv-header h1 { font-size: 2rem; font-weight: bold; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 2px; }

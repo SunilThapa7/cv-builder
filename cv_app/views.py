@@ -255,7 +255,42 @@ def cv_delete(request, cv_id):
 @login_required
 def cv_preview(request, cv_id):
     cv = get_object_or_404(CV, id=cv_id, owner=request.user)
-    # Optional override to preview as another template without saving
+    # Allow saving the selected preview template or saving as a new CV
+    if request.method == 'POST':
+        action = (request.POST.get('action') or '').strip()
+        sel_slug = (request.POST.get('template') or '').strip()
+        try:
+            sel_template = CVTemplate.objects.get(slug=sel_slug, active=True) if sel_slug else cv.template
+        except CVTemplate.DoesNotExist:
+            sel_template = cv.template
+        if action == 'save_template':
+            cv.template = sel_template
+            cv.save(update_fields=['template', 'updated_at'])
+            messages.success(request, 'Template updated for this CV.')
+            return redirect('cv_preview', cv_id=cv.id)
+        elif action == 'save_as_new':
+            new_cv = CV(
+                owner=request.user,
+                title=f"{cv.title} (Copy)",
+                template=sel_template,
+                full_name=cv.full_name,
+                job_title=cv.job_title,
+                email=cv.email,
+                phone=cv.phone,
+                location=cv.location,
+                links=cv.links,
+                summary=cv.summary,
+                skills=cv.skills,
+                experience=cv.experience,
+                education=cv.education,
+                projects=cv.projects,
+                photo=cv.photo,
+            )
+            new_cv.save()
+            messages.success(request, 'Saved as a new CV with the selected template.')
+            return redirect('cv_preview', cv_id=new_cv.id)
+
+    # Optional override to preview as another template without saving (GET)
     override_slug = (request.GET.get('template') or '').strip()
     print_compact = (request.GET.get('compact') == '1')
     if override_slug:

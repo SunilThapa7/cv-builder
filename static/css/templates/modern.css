@@ -17,10 +17,10 @@
 .modern-template .header-contact p { margin: 0.3rem 0; }
 .modern-template .links-section { display: flex; flex-wrap: wrap; gap: 1rem; padding: 1rem 0; border-bottom: 2px solid #ecf0f1; margin-bottom: 1.5rem; }
 .modern-template .link-item { background: #ecf0f1; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem; color: #2c3e50; }
-.modern-template .cv-section { margin-bottom: 2rem; }
-.modern-template .cv-section h2 { color: #667eea; font-size: 1.5rem; margin-bottom: 1rem; position: relative; padding-left: 1rem; }
-.modern-template .cv-section h2::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 100%; background: linear-gradient(180deg, #667eea 0%, #764ba2 100%); }
-.modern-template .experience-item, .modern-template .education-item, .modern-template .project-item { margin-bottom: 1.5rem; padding-left: 1rem; }
+.modern-template .cv-section { margin-bottom: 1.6rem; }
+/* Redesign headings: remove left indicator bar, add underline for clarity */
+.modern-template .cv-section h2 { color: #667eea; font-size: 1.4rem; margin-bottom: 0.75rem; padding-left: 0; border-bottom: 2px solid #e6e9ff; padding-bottom: 0.35rem; }
+.modern-template .experience-item, .modern-template .education-item, .modern-template .project-item { margin-bottom: 1.2rem; padding-left: 0; }
 .modern-template .item-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.3rem; }
 .modern-template .item-header h3 { color: #2c3e50; font-size: 1.1rem; }
 .modern-template .duration { color: #667eea; font-weight: bold; font-size: 0.9rem; }
@@ -33,14 +33,14 @@
 .modern-template.compact-print .cv-header h1 { font-size: 2rem; }
 .modern-template.compact-print .job-title { font-size: 1rem; }
 .modern-template.compact-print .links-section { margin-bottom: 1rem; padding: 0.6rem 0; gap: 0.6rem; }
-.modern-template.compact-print .cv-section { margin-bottom: 1rem; }
-.modern-template.compact-print .cv-section h2 { font-size: 1.2rem; }
+.modern-template.compact-print .cv-section { margin-bottom: 0.8rem; }
+.modern-template.compact-print .cv-section h2 { font-size: 1.1rem; }
 .modern-template.compact-print .experience-item,
 .modern-template.compact-print .education-item,
-.modern-template.compact-print .project-item { margin-bottom: 0.8rem; }
+.modern-template.compact-print .project-item { margin-bottom: 0.6rem; }
 
 @media print {
-    @page { size: A4; margin: 15mm; }
+    @page { size: A4; margin: 12mm; }
     body { background: white; color: #000; }
     .navbar, .footer, .preview-controls { display: none !important; }
     .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
@@ -54,4 +54,11 @@
     .modern-template .experience-item,
     .modern-template .education-item,
     .modern-template .project-item { page-break-inside: avoid; break-inside: avoid; }
+
+    /* Slightly tighter spacing for print to help single-page fit */
+    .modern-template .cv-section { margin-bottom: 0.9rem; }
+    .modern-template .cv-section h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .modern-template .item-header h3 { font-size: 1rem; }
+    .modern-template .duration { font-size: 0.85rem; }
+    .modern-template .company { margin-bottom: 0.3rem; }
 }

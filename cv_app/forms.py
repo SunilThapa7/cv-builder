@@ -9,7 +9,7 @@ class CVForm(forms.ModelForm):
         model = CV
         fields = [
             'title', 'template', 'full_name', 'job_title',
-            'email', 'phone', 'location', 'links',
+            'email', 'phone', 'location', 'links', 'photo',
             'summary', 'skills', 'experience', 'education', 'projects'
         ]
         widgets = {
@@ -23,6 +23,7 @@ class CVForm(forms.ModelForm):
                 'rows': 3,
                 'placeholder': 'https://linkedin.com/in/johndoe\nhttps://github.com/johndoe'
             }),
+            'photo': forms.ClearableFileInput(),
             'summary': forms.Textarea(attrs={
                 'rows': 4,
                 'placeholder': 'Brief professional summary...'

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ cv.title }} - Preview{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/templates/advanced.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="preview-controls">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    <button onclick="window.print()" class="btn btn-primary">Download PDF</button>
+</div>
+
+<div class="cv-preview advanced-template">
+    <div class="cv-header">
+        {% if cv.photo %}
+        <div class="avatar">
+            <img src="{{ cv.photo.url }}" alt="{{ cv.full_name }}" />
+        </div>
+        {% endif %}
+        <div class="identity">
+            <h1>{{ cv.full_name }}</h1>
+            {% if cv.job_title %}
+            <p class="job-title">{{ cv.job_title }}</p>
+            {% endif %}
+            <div class="contact">
+                <span>{{ cv.email }}</span>
+                {% if cv.phone %}<span>{{ cv.phone }}</span>{% endif %}
+                {% if cv.location %}<span>{{ cv.location }}</span>{% endif %}
+            </div>
+            {% if cv.get_links_list %}
+            <div class="links">
+                {% for link in cv.get_links_list %}
+                <span>{{ link }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if cv.summary %}
+    <div class="cv-section">
+        <h2>Profile</h2>
+        <p>{{ cv.summary }}</p>
+    </div>
+    {% endif %}
+
+    {% if cv.skills %}
+    <div class="cv-section">
+        <h2>Skills</h2>
+        <p>{{ cv.skills }}</p>
+    </div>
+    {% endif %}
+
+    {% if cv.get_experience_list %}
+    <div class="cv-section">
+        <h2>Experience</h2>
+        {% for exp in cv.get_experience_list %}
+        <div class="experience-item">
+            <div class="item-header">
+                <h3>{{ exp.position }}</h3>
+                <span class="duration">{{ exp.duration }}</span>
+            </div>
+            <p class="company">{{ exp.company }}</p>
+            {% if exp.website %}
+            <p class="website"><a href="{{ exp.website }}" target="_blank" rel="noopener">{{ exp.website }}</a></p>
+            {% endif %}
+            {% if exp.responsibilities %}
+            <ul class="responsibilities">
+                {% for r in exp.responsibilities %}
+                <li>{{ r }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if exp.description %}
+            <p>{{ exp.description }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if cv.get_education_list %}
+    <div class="cv-section">
+        <h2>Education</h2>
+        {% for edu in cv.get_education_list %}
+        <div class="education-item">
+            <div class="item-header">
+                <h3>{{ edu.degree }}</h3>
+                <span class="duration">{{ edu.duration }}</span>
+            </div>
+            <p>{{ edu.institution }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if cv.get_projects_list %}
+    <div class="cv-section">
+        <h2>Projects</h2>
+        {% for project in cv.get_projects_list %}
+        <div class="project-item">
+            <h3>{{ project.name }}</h3>
+            <p>{{ project.description }}</p>
+            {% if project.technologies %}
+            <p class="technologies">Technologies: {{ project.technologies }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

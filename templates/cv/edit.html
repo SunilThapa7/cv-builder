@@ -5,7 +5,7 @@
 {% block content %}
 <div class="form-container">
     <h1>Edit CV: {{ cv.title }}</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
         <div class="form-section">
@@ -44,6 +44,10 @@
             {{ form.links.errors }}
             <label>Links (LinkedIn, GitHub, etc.)</label>
             {{ form.links }}
+            
+            {{ form.photo.errors }}
+            <label>Photo (optional)</label>
+            {{ form.photo }}
         </div>
         
         <div class="form-section">

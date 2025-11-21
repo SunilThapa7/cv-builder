@@ -18,8 +18,8 @@
 .modern-template .links-section { display: flex; flex-wrap: wrap; gap: 1rem; padding: 1rem 0; border-bottom: 2px solid #ecf0f1; margin-bottom: 1.5rem; }
 .modern-template .link-item { background: #ecf0f1; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem; color: #2c3e50; }
 .modern-template .cv-section { margin-bottom: 2rem; }
-.modern-template .cv-section h2 { color: #667eea; font-size: 1.5rem; margin-bottom: 1rem; padding-left: 0; position: static; }
-.modern-template .cv-section h2::before { content: none; display: none; }
+.modern-template .cv-section h2 { color: #667eea; font-size: 1.5rem; margin-bottom: 1rem; position: relative; padding-left: 1rem; }
+.modern-template .cv-section h2::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 100%; background: linear-gradient(180deg, #667eea 0%, #764ba2 100%); }
 .modern-template .experience-item, .modern-template .education-item, .modern-template .project-item { margin-bottom: 1.5rem; padding-left: 1rem; }
 .modern-template .item-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.3rem; }
 .modern-template .item-header h3 { color: #2c3e50; font-size: 1.1rem; }
@@ -28,23 +28,14 @@
 .modern-template .technologies { background: #f8f9fa; padding: 0.5rem; border-radius: 5px; margin-top: 0.5rem; color: #667eea; font-size: 0.9rem; }
 
 @media print {
-    @page { size: A4; margin: 10mm; }
+    @page { size: A4; margin: 15mm; }
     body { background: white; color: #000; }
     .navbar, .footer, .preview-controls { display: none !important; }
-    .cv-preview { max-width: 100%; margin: 0; padding: 10mm; box-shadow: none; }
+    .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
 
     /* Remove decorative backgrounds for print and avoid header splitting */
-    .modern-template .cv-header { margin: 0 0 1.2rem 0; background: none !important; color: #000; page-break-after: avoid; break-after: avoid; }
+    .modern-template .cv-header { margin: 0 0 2rem 0; background: none !important; color: #000; page-break-after: avoid; break-after: avoid; }
     * { background: transparent !important; box-shadow: none !important; }
-
-    /* Compact typography and spacing for single-page fit */
-    .modern-template { line-height: 1.45; font-size: 0.96rem; }
-    .modern-template .cv-header h1 { font-size: 1.9rem; }
-    .modern-template .job-title { font-size: 1rem; }
-    .modern-template .cv-section { margin-bottom: 1rem; }
-    .modern-template .cv-section h2 { font-size: 1.05rem; margin-bottom: 0.6rem; }
-    .modern-template .experience-item, .modern-template .education-item, .modern-template .project-item { margin-bottom: 0.8rem; padding-left: 0; }
-    .modern-template .duration, .modern-template .company, .modern-template .technologies { font-size: 0.9rem; }
 
     /* Avoid splitting items across pages */
     .modern-template .cv-section,

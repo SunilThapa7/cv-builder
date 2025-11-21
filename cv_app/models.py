@@ -26,6 +26,9 @@ class CV(models.Model):
     location = models.CharField(max_length=200, blank=True)
     links = models.TextField(blank=True, help_text="LinkedIn, GitHub, Portfolio (one per line)")
 
+    # Optional Photo
+    photo = models.ImageField(upload_to='photos/', blank=True, null=True)
+
     # Summary
     summary = models.TextField(blank=True)
 

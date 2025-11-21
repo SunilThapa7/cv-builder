@@ -48,7 +48,7 @@ def cv_create(request):
     ProjectFormSet = formset_factory(ProjectItemForm, extra=1, can_delete=True)
 
     if request.method == 'POST':
-        form = CVForm(request.POST)
+        form = CVForm(request.POST, request.FILES)
         exp_fs = ExperienceFormSet(request.POST, prefix='exp')
         edu_fs = EducationFormSet(request.POST, prefix='edu')
         proj_fs = ProjectFormSet(request.POST, prefix='proj')
@@ -120,7 +120,7 @@ def cv_edit(request, cv_id):
     ProjectFormSet = formset_factory(ProjectItemForm, extra=1, can_delete=True)
 
     if request.method == 'POST':
-        form = CVForm(request.POST, instance=cv)
+        form = CVForm(request.POST, request.FILES, instance=cv)
         exp_fs = ExperienceFormSet(request.POST, prefix='exp')
         edu_fs = EducationFormSet(request.POST, prefix='edu')
         proj_fs = ProjectFormSet(request.POST, prefix='proj')

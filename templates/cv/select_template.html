@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Choose Template{% endblock %}
+
+{% block content %}
+<div class="templates-section">
+  <h1>Select a Template</h1>
+  <div class="templates-grid">
+    {% for t in templates %}
+    <a class="template-card" href="{% url 'cv_create' %}?template={{ t.slug }}">
+      <img src="{% static t.preview_image %}" alt="{{ t.name }}">
+      <h3>{{ t.name }}</h3>
+    </a>
+    {% endfor %}
+  </div>
+  <p style="margin-top:1rem;"><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+</div>
+{% endblock %}

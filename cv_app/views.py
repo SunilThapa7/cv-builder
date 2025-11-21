@@ -116,6 +116,10 @@ def cv_create(request):
                 is_advanced_template = (tmpl.slug == 'advanced')
             except CVTemplate.DoesNotExist:
                 initial = {}
+        else:
+            # No template chosen yet: show selection page first
+            templates = CVTemplate.objects.filter(active=True).order_by('name')
+            return render(request, 'cv/select_template.html', {'templates': templates})
         form = CVForm(initial=initial)
         exp_fs = ExperienceFormSet(prefix='exp')
         edu_fs = EducationFormSet(prefix='edu')
@@ -251,7 +255,19 @@ def cv_delete(request, cv_id):
 @login_required
 def cv_preview(request, cv_id):
     cv = get_object_or_404(CV, id=cv_id, owner=request.user)
-    template_name = f'cv/preview_{cv.template.slug}.html'
-    return render(request, template_name, {'cv': cv})
+    # Optional override to preview as another template without saving
+    override_slug = (request.GET.get('template') or '').strip()
+    if override_slug:
+        try:
+            tmpl = CVTemplate.objects.get(slug=override_slug, active=True)
+            template_slug = tmpl.slug
+        except CVTemplate.DoesNotExist:
+            template_slug = cv.template.slug
+    else:
+        template_slug = cv.template.slug
+
+    template_name = f'cv/preview_{template_slug}.html'
+    templates = CVTemplate.objects.filter(active=True).order_by('name')
+    return render(request, template_name, {'cv': cv, 'templates': templates, 'current_template_slug': template_slug})
 
 # Create your views here.

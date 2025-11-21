@@ -24,8 +24,7 @@
 
 /* Sections */
 .advanced-template .cv-section { margin-bottom: 1.5rem; }
-.advanced-template .cv-section h2 { font-size: 1.1rem; letter-spacing: 0.02em; color: #3547e6; margin-bottom: 0.6rem; position: relative; padding-left: 0.75rem; }
-.advanced-template .cv-section h2::before { content: ""; position: absolute; left: 0; top: 0.2rem; width: 3px; height: 1.1rem; background: linear-gradient(180deg, #6a7bff, #3547e6); border-radius: 2px; }
+.advanced-template .cv-section h2 { font-size: 1.1rem; letter-spacing: 0.02em; color: #3547e6; margin-bottom: 0.6rem; }
 .advanced-template p { line-height: 1.6; }
 
 /* Reusable item styles */

@@ -9,8 +9,7 @@ class Command(BaseCommand):
             {'slug': 'classic', 'name': 'Classic', 'preview_image': 'img/template_previews/classic.png'},
             {'slug': 'modern', 'name': 'Modern', 'preview_image': 'img/template_previews/modern.png'},
             {'slug': 'minimal', 'name': 'Minimal', 'preview_image': 'img/template_previews/minimal.png'},
-            # Reuse modern preview image for now; can be replaced with a dedicated one later
-            {'slug': 'advanced', 'name': 'Advanced', 'preview_image': 'img/template_previews/modern.png'},
+            {'slug': 'advanced', 'name': 'Advanced', 'preview_image': 'img/template_previews/advanced.png'},
         ]
 
         for template_data in templates:

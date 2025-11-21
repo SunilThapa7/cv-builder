@@ -44,10 +44,11 @@
             {{ form.links.errors }}
             <label>Links (LinkedIn, GitHub, etc.)</label>
             {{ form.links }}
-
+            {% if is_advanced_template %}
             {{ form.photo.errors }}
             <label>Photo (optional)</label>
             {{ form.photo }}
+            {% endif %}
         </div>
         
         <div class="form-section">

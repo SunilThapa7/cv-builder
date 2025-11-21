@@ -28,6 +28,12 @@ def home(request):
                 'slug': 'minimal',
                 'description': 'Single-column, ATS-friendly',
                 'preview': 'img/template_previews/minimal.png'
+            },
+            {
+                'name': 'Advanced',
+                'slug': 'advanced',
+                'description': 'Distinct, ATS-friendly with optional photo',
+                'preview': 'img/template_previews/advanced.png'
             }
         ]
     }
@@ -52,6 +58,15 @@ def cv_create(request):
         exp_fs = ExperienceFormSet(request.POST, prefix='exp')
         edu_fs = EducationFormSet(request.POST, prefix='edu')
         proj_fs = ProjectFormSet(request.POST, prefix='proj')
+        # Determine selected template for conditional UI
+        is_advanced_template = False
+        tmpl_id = (request.POST.get('template') or '').strip()
+        if tmpl_id:
+            try:
+                sel = CVTemplate.objects.get(id=tmpl_id)
+                is_advanced_template = (sel.slug == 'advanced')
+            except CVTemplate.DoesNotExist:
+                is_advanced_template = False
 
         if form.is_valid() and exp_fs.is_valid() and edu_fs.is_valid() and proj_fs.is_valid():
             # Build JSON payloads from non-empty rows
@@ -93,10 +108,12 @@ def cv_create(request):
     else:
         template_slug = request.GET.get('template')
         initial = {}
+        is_advanced_template = False
         if template_slug:
             try:
                 tmpl = CVTemplate.objects.get(slug=template_slug, active=True)
                 initial = {'template': tmpl}
+                is_advanced_template = (tmpl.slug == 'advanced')
             except CVTemplate.DoesNotExist:
                 initial = {}
         form = CVForm(initial=initial)
@@ -109,6 +126,7 @@ def cv_create(request):
         'exp_formset': exp_fs,
         'edu_formset': edu_fs,
         'proj_formset': proj_fs,
+        'is_advanced_template': is_advanced_template,
     })
 
 
@@ -124,6 +142,15 @@ def cv_edit(request, cv_id):
         exp_fs = ExperienceFormSet(request.POST, prefix='exp')
         edu_fs = EducationFormSet(request.POST, prefix='edu')
         proj_fs = ProjectFormSet(request.POST, prefix='proj')
+        # Determine selected template from POST
+        is_advanced_template = False
+        tmpl_id = (request.POST.get('template') or '').strip()
+        if tmpl_id:
+            try:
+                sel = CVTemplate.objects.get(id=tmpl_id)
+                is_advanced_template = (sel.slug == 'advanced')
+            except CVTemplate.DoesNotExist:
+                is_advanced_template = False
 
         if form.is_valid() and exp_fs.is_valid() and edu_fs.is_valid() and proj_fs.is_valid():
             def non_empty(forms, keys):
@@ -161,6 +188,7 @@ def cv_edit(request, cv_id):
             return redirect('dashboard')
     else:
         form = CVForm(instance=cv)
+        is_advanced_template = (cv.template.slug == 'advanced') if cv.template else False
         try:
             exp_initial = json.loads(cv.experience) if cv.experience else []
         except json.JSONDecodeError:
@@ -206,6 +234,7 @@ def cv_edit(request, cv_id):
         'exp_formset': exp_fs,
         'edu_formset': edu_fs,
         'proj_formset': proj_fs,
+        'is_advanced_template': is_advanced_template,
     })
 
 

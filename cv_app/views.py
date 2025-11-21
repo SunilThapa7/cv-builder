@@ -71,7 +71,7 @@ def cv_create(request):
             form.instance.education = json.dumps(edu_items, ensure_ascii=False)
             form.instance.projects = json.dumps(proj_items, ensure_ascii=False)
 
-n            cv = form.save(commit=False)
+            cv = form.save(commit=False)
             cv.owner = request.user
             cv.save()
             messages.success(request, 'CV created successfully!')

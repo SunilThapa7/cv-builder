@@ -206,11 +206,14 @@ def cv_edit(request, cv_id):
         except json.JSONDecodeError:
             proj_initial = []
 
-        # Normalize keys to match form fields
+        # Normalize keys to match form fields and keep all fields
         exp_initial = [{
             'company': item.get('company', ''),
             'position': item.get('position', ''),
             'duration': item.get('duration', ''),
+            'website': item.get('website', ''),
+            # responsibilities stored as list -> show as newline-separated in textarea
+            'responsibilities': '\n'.join(item.get('responsibilities', []) if isinstance(item.get('responsibilities'), list) else [item.get('responsibilities', '')]).strip(),
             'description': item.get('description', ''),
         } for item in exp_initial]
 

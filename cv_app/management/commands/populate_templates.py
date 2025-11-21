@@ -13,9 +13,20 @@ class Command(BaseCommand):
         ]
 
         for template_data in templates:
-            CVTemplate.objects.get_or_create(
+            obj, created = CVTemplate.objects.get_or_create(
                 slug=template_data['slug'],
                 defaults=template_data
             )
+            # Update existing rows to keep preview images and names in sync
+            if not created:
+                updated = False
+                if obj.name != template_data['name']:
+                    obj.name = template_data['name']
+                    updated = True
+                if obj.preview_image != template_data['preview_image']:
+                    obj.preview_image = template_data['preview_image']
+                    updated = True
+                if updated:
+                    obj.save()
 
         self.stdout.write(self.style.SUCCESS('Successfully populated templates'))

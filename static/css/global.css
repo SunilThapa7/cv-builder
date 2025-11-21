@@ -377,3 +377,24 @@ footer {
     .cv-card { flex-direction: column; align-items: stretch; gap: 1rem; }
     .cv-actions { flex-direction: column; }
 }
+
+/* Preview switcher (compact, responsive, hidden on print) */
+.preview-switcher {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+.preview-switcher form {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.preview-switcher label { font-size: 0.9rem; color: #444; }
+.preview-switcher select { max-width: 220px; padding: 0.4rem 0.6rem; font-size: 0.9rem; }
+.preview-switcher .btn { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+
+@media print {
+  .preview-switcher { display: none !important; }
+  .preview-controls { display: none !important; }
+}

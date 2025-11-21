@@ -27,6 +27,18 @@
 .modern-template .company { color: #7f8c8d; font-style: italic; margin-bottom: 0.5rem; }
 .modern-template .technologies { background: #f8f9fa; padding: 0.5rem; border-radius: 5px; margin-top: 0.5rem; color: #667eea; font-size: 0.9rem; }
 
+/* Optional compact mode to help fit on one page when requested */
+.modern-template.compact-print { padding: 12mm; }
+.modern-template.compact-print .cv-header { padding: 1.2rem; margin: -12mm -12mm 1rem -12mm; }
+.modern-template.compact-print .cv-header h1 { font-size: 2rem; }
+.modern-template.compact-print .job-title { font-size: 1rem; }
+.modern-template.compact-print .links-section { margin-bottom: 1rem; padding: 0.6rem 0; gap: 0.6rem; }
+.modern-template.compact-print .cv-section { margin-bottom: 1rem; }
+.modern-template.compact-print .cv-section h2 { font-size: 1.2rem; }
+.modern-template.compact-print .experience-item,
+.modern-template.compact-print .education-item,
+.modern-template.compact-print .project-item { margin-bottom: 0.8rem; }
+
 @media print {
     @page { size: A4; margin: 15mm; }
     body { background: white; color: #000; }

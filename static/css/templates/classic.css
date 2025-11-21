@@ -40,6 +40,18 @@
 .classic-template .experience-item h3, .classic-template .education-item h3, .classic-template .project-item h3 { color: #2c3e50; font-size: 1.1rem; margin-bottom: 0.3rem; }
 .classic-template .company, .classic-template .technologies { color: #7f8c8d; font-size: 0.9rem; font-style: italic; }
 
+/* Optional compact mode to help fit on one page when requested */
+.classic-template.compact-print { padding: 12mm; }
+.classic-template.compact-print .cv-header h1 { font-size: 2rem; }
+.classic-template.compact-print .job-title { font-size: 1rem; }
+.classic-template.compact-print .cv-body { gap: 1.2rem; }
+.classic-template.compact-print .cv-sidebar { padding-right: 1rem; }
+.classic-template.compact-print .cv-section { margin-bottom: 1rem; }
+.classic-template.compact-print .cv-section h2 { font-size: 1rem; margin-bottom: 0.5rem; }
+.classic-template.compact-print .experience-item,
+.classic-template.compact-print .education-item,
+.classic-template.compact-print .project-item { margin-bottom: 0.8rem; }
+
 @media print {
     @page { size: A4; margin: 15mm; }
     body { background: white; color: #000; }

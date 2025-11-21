@@ -21,6 +21,14 @@
 .minimal-template .item-date { font-style: italic; margin-bottom: 0.3rem; font-size: 0.9rem; }
 .minimal-template .tech-stack { font-style: italic; font-size: 0.9rem; margin-top: 0.3rem; }
 
+/* Optional compact mode to help fit on one page when requested */
+.minimal-template.compact-print { padding: 12mm; }
+.minimal-template.compact-print .cv-header h1 { font-size: 1.8rem; }
+.minimal-template.compact-print .job-title { font-size: 1rem; }
+.minimal-template.compact-print .cv-section { margin-bottom: 1rem; }
+.minimal-template.compact-print .cv-section h2 { font-size: 1rem; margin-bottom: 0.5rem; }
+.minimal-template.compact-print .section-item { margin-bottom: 0.6rem; }
+
 @media print {
     @page { size: A4; margin: 15mm; }
     body { background: white; color: #000; }

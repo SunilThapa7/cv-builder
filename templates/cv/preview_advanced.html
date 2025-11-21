@@ -13,7 +13,7 @@
     <button onclick="window.print()" class="btn btn-primary">Download PDF</button>
 </div>
 
-<div class="cv-preview advanced-template">
+<div class="cv-preview advanced-template{% if print_compact %} compact-print{% endif %}">
     <div class="cv-header">
         {% if cv.photo %}
         <div class="avatar">

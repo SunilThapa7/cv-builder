@@ -11,15 +11,6 @@
 <div class="preview-controls">
     <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
     <button onclick="window.print()" class="btn btn-primary">Download PDF</button>
-    <form method="get" action="{% url 'cv_preview' cv.id %}" style="display:inline-block; margin-left: 1rem;">
-        <label for="tpl">Preview as:</label>
-        <select id="tpl" name="template">
-            {% for t in templates %}
-            <option value="{{ t.slug }}" {% if t.slug == current_template_slug %}selected{% endif %}>{{ t.name }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit" class="btn btn-secondary">Apply</button>
-    </form>
 </div>
 
 <div class="cv-preview minimal-template">
@@ -105,5 +96,18 @@
         {% endfor %}
     </div>
     {% endif %}
+</div>
+
+<div class="preview-switcher" style="margin-top: 1rem;">
+    <form method="get" action="{% url 'cv_preview' cv.id %}">
+        <label for="tpl">Preview as:</label>
+        <select id="tpl" name="template">
+            {% for t in templates %}
+            <option value="{{ t.slug }}" {% if t.slug == current_template_slug %}selected{% endif %}>{{ t.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-secondary">Apply</button>
+    </form>
+    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #555;">Switch template for preview/print only. Your saved template is unchanged.</p>
 </div>
 {% endblock %}

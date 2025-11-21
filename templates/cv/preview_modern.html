@@ -13,7 +13,7 @@
     <button onclick="window.print()" class="btn btn-primary">Download PDF</button>
 </div>
 
-<div class="cv-preview modern-template">
+<div class="cv-preview modern-template{% if print_compact %} compact-print{% endif %}">
     <div class="cv-header">
         <div class="header-content">
             <h1>{{ cv.full_name }}</h1>

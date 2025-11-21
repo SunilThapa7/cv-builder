@@ -11,11 +11,9 @@
 <div class="preview-controls">
     <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
     <button onclick="window.print()" class="btn btn-primary">Download PDF</button>
-        <button type="submit" class="btn btn-secondary">Apply</button>
-    </form>
 </div>
 
-<div class="cv-preview classic-template">
+<div class="cv-preview classic-template{% if print_compact %} compact-print{% endif %}">
     <div class="cv-header">
         <h1>{{ cv.full_name }}</h1>
         {% if cv.job_title %}

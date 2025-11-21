@@ -257,6 +257,7 @@ def cv_preview(request, cv_id):
     cv = get_object_or_404(CV, id=cv_id, owner=request.user)
     # Optional override to preview as another template without saving
     override_slug = (request.GET.get('template') or '').strip()
+    print_compact = (request.GET.get('compact') == '1')
     if override_slug:
         try:
             tmpl = CVTemplate.objects.get(slug=override_slug, active=True)
@@ -268,6 +269,11 @@ def cv_preview(request, cv_id):
 
     template_name = f'cv/preview_{template_slug}.html'
     templates = CVTemplate.objects.filter(active=True).order_by('name')
-    return render(request, template_name, {'cv': cv, 'templates': templates, 'current_template_slug': template_slug})
+    return render(request, template_name, {
+        'cv': cv,
+        'templates': templates,
+        'current_template_slug': template_slug,
+        'print_compact': print_compact,
+    })
 
 # Create your views here.

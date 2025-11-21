@@ -49,6 +49,18 @@
                 <p>{{ cv.skills }}</p>
             </div>
             {% endif %}
+
+            {% if cv.get_education_list %}
+            <div class="cv-section">
+                <h2>Education</h2>
+                {% for edu in cv.get_education_list %}
+                <div class="education-item">
+                    <h3>{{ edu.degree }}</h3>
+                    <p>{{ edu.institution }} | {{ edu.duration }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
         
         <div class="cv-main">
@@ -79,18 +91,6 @@
                     {% if exp.description %}
                     <p>{{ exp.description }}</p>
                     {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-            
-            {% if cv.get_education_list %}
-            <div class="cv-section">
-                <h2>Education</h2>
-                {% for edu in cv.get_education_list %}
-                <div class="education-item">
-                    <h3>{{ edu.degree }}</h3>
-                    <p>{{ edu.institution }} | {{ edu.duration }}</p>
                 </div>
                 {% endfor %}
             </div>

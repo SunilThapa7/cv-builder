@@ -13,8 +13,14 @@
 .minimal-template .tech-stack { font-style: italic; font-size: 0.9rem; margin-top: 0.3rem; }
 
 @media print {
-    body { background: white; }
+    @page { size: A4; margin: 15mm; }
+    body { background: white; color: #000; }
     .navbar, .footer, .preview-controls { display: none !important; }
     .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
-    @page { size: A4; margin: 15mm; }
+
+    /* Avoid splitting items across pages */
+    .minimal-template .cv-section,
+    .minimal-template .section-item { page-break-inside: avoid; break-inside: avoid; }
+
+    * { background: transparent !important; box-shadow: none !important; }
 }

@@ -18,9 +18,18 @@
 .modern-template .technologies { background: #f8f9fa; padding: 0.5rem; border-radius: 5px; margin-top: 0.5rem; color: #667eea; font-size: 0.9rem; }
 
 @media print {
-    body { background: white; }
+    @page { size: A4; margin: 15mm; }
+    body { background: white; color: #000; }
     .navbar, .footer, .preview-controls { display: none !important; }
     .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
-    .modern-template .cv-header { margin: 0 0 2rem 0; }
-    @page { size: A4; margin: 15mm; }
+
+    /* Remove decorative backgrounds for print */
+    .modern-template .cv-header { margin: 0 0 2rem 0; background: none !important; color: #000; }
+    * { background: transparent !important; box-shadow: none !important; }
+
+    /* Avoid splitting items across pages */
+    .modern-template .cv-section,
+    .modern-template .experience-item,
+    .modern-template .education-item,
+    .modern-template .project-item { page-break-inside: avoid; break-inside: avoid; }
 }

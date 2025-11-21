@@ -41,8 +41,21 @@
 .classic-template .company, .classic-template .technologies { color: #7f8c8d; font-size: 0.9rem; font-style: italic; }
 
 @media print {
-    body { background: white; }
+    @page { size: A4; margin: 15mm; }
+    body { background: white; color: #000; }
     .navbar, .footer, .preview-controls { display: none !important; }
     .cv-preview { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
-    @page { size: A4; margin: 15mm; }
+
+    /* Stack two-column layout into single column for linear reading */
+    .classic-template .cv-body { display: block !important; }
+    .classic-template .cv-sidebar, .classic-template .cv-main { width: 100% !important; padding: 0 !important; border: 0 !important; }
+
+    /* Avoid awkward splits across pages */
+    .classic-template .cv-section,
+    .classic-template .experience-item,
+    .classic-template .education-item,
+    .classic-template .project-item { page-break-inside: avoid; break-inside: avoid; }
+
+    /* Remove print-unfriendly backgrounds and shadows */
+    * { background: transparent !important; box-shadow: none !important; }
 }

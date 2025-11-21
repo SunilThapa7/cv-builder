@@ -64,7 +64,19 @@
                 <span class="duration">{{ exp.duration }}</span>
             </div>
             <p class="company">{{ exp.company }}</p>
+            {% if exp.website %}
+            <p class="website"><a href="{{ exp.website }}" target="_blank" rel="noopener">{{ exp.website }}</a></p>
+            {% endif %}
+            {% if exp.responsibilities %}
+            <ul class="responsibilities">
+                {% for r in exp.responsibilities %}
+                <li>{{ r }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if exp.description %}
             <p>{{ exp.description }}</p>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

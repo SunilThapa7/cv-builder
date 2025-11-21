@@ -62,8 +62,22 @@ def cv_create(request):
                         if any(f.cleaned_data.get(k, '').strip() for k in keys):
                             items.append({k: f.cleaned_data.get(k, '').strip() for k in keys})
                 return items
-
-            exp_items = non_empty(exp_fs.forms, ['company', 'position', 'duration', 'description'])
+            # Build experience with website and responsibilities as list
+            exp_items = []
+            for f in exp_fs.forms:
+                cd = getattr(f, 'cleaned_data', {}) or {}
+                if cd and not cd.get('DELETE'):
+                    if any((cd.get('company') or cd.get('position') or cd.get('duration') or cd.get('website') or cd.get('description') or cd.get('responsibilities'))):
+                        resp_raw = cd.get('responsibilities') or ''
+                        responsibilities = [ln.strip() for ln in resp_raw.splitlines() if ln.strip()]
+                        exp_items.append({
+                            'company': (cd.get('company') or '').strip(),
+                            'position': (cd.get('position') or '').strip(),
+                            'duration': (cd.get('duration') or '').strip(),
+                            'website': (cd.get('website') or '').strip(),
+                            'responsibilities': responsibilities,
+                            'description': (cd.get('description') or '').strip(),
+                        })
             edu_items = non_empty(edu_fs.forms, ['institution', 'degree', 'duration', 'status'])
             proj_items = non_empty(proj_fs.forms, ['name', 'description', 'technologies', 'status'])
 
@@ -119,8 +133,22 @@ def cv_edit(request, cv_id):
                         if any(f.cleaned_data.get(k, '').strip() for k in keys):
                             items.append({k: f.cleaned_data.get(k, '').strip() for k in keys})
                 return items
-
-            exp_items = non_empty(exp_fs.forms, ['company', 'position', 'duration', 'description'])
+            # Build experience with website and responsibilities as list
+            exp_items = []
+            for f in exp_fs.forms:
+                cd = getattr(f, 'cleaned_data', {}) or {}
+                if cd and not cd.get('DELETE'):
+                    if any((cd.get('company') or cd.get('position') or cd.get('duration') or cd.get('website') or cd.get('description') or cd.get('responsibilities'))):
+                        resp_raw = cd.get('responsibilities') or ''
+                        responsibilities = [ln.strip() for ln in resp_raw.splitlines() if ln.strip()]
+                        exp_items.append({
+                            'company': (cd.get('company') or '').strip(),
+                            'position': (cd.get('position') or '').strip(),
+                            'duration': (cd.get('duration') or '').strip(),
+                            'website': (cd.get('website') or '').strip(),
+                            'responsibilities': responsibilities,
+                            'description': (cd.get('description') or '').strip(),
+                        })
             edu_items = non_empty(edu_fs.forms, ['institution', 'degree', 'duration', 'status'])
             proj_items = non_empty(proj_fs.forms, ['name', 'description', 'technologies', 'status'])
 

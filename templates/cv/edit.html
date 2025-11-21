@@ -74,7 +74,8 @@
                     <label>Responsibilities</label>{{ f.responsibilities }}
                     <label>Description</label>{{ f.description }}
                     {% if exp_formset.can_delete %}
-                    <label>Remove</label>{{ f.DELETE }}
+                    <span style="display:none;">{{ f.DELETE }}</span>
+                    <button type="button" class="btn btn-link text-danger remove-item" data-prefix="exp">Remove</button>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -88,12 +89,35 @@
           const addBtn = document.getElementById('add-exp');
           const totalEl = document.querySelector('input[name="' + prefix + '-TOTAL_FORMS"]');
           const emptyHtml = `{{ exp_formset.empty_form.as_p|escapejs }}`;
+
+          // Delegate remove clicks: check DELETE and hide row
+          container.addEventListener('click', function(e){
+            if(e.target && e.target.classList.contains('remove-item')){
+              const item = e.target.closest('.formset-item');
+              if(!item) return;
+              const delField = item.querySelector('input[type="checkbox"][name^="' + prefix + '-"][name$="-DELETE"]');
+              if(delField){ delField.checked = true; }
+              item.style.display = 'none';
+            }
+          });
+
           addBtn.addEventListener('click', function(){
             const idx = parseInt(totalEl.value, 10);
             const html = emptyHtml.replace(/__prefix__/g, idx);
             const wrapper = document.createElement('div');
             wrapper.className = 'formset-item';
             wrapper.innerHTML = html;
+            // hide raw DELETE checkbox if present
+            const delLabel = wrapper.querySelector('input[name$="-DELETE"]');
+            if(delLabel){ delLabel.parentElement && (delLabel.parentElement.style.display = 'none'); }
+            // add remove button
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-link text-danger remove-item';
+            btn.dataset.prefix = prefix;
+            btn.textContent = 'Remove';
+            wrapper.appendChild(btn);
+
             container.appendChild(wrapper);
             totalEl.value = idx + 1;
           });
@@ -112,7 +136,8 @@
                     <label>Duration</label>{{ f.duration }}
                     <label>Status</label>{{ f.status }}
                     {% if edu_formset.can_delete %}
-                    <label>Remove</label>{{ f.DELETE }}
+                    <span style="display:none;">{{ f.DELETE }}</span>
+                    <button type="button" class="btn btn-link text-danger remove-item" data-prefix="edu">Remove</button>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -126,19 +151,37 @@
           const addBtn = document.getElementById('add-edu');
           const totalEl = document.querySelector('input[name="' + prefix + '-TOTAL_FORMS"]');
           const emptyHtml = `{{ edu_formset.empty_form.as_p|escapejs }}`;
+
+          container.addEventListener('click', function(e){
+            if(e.target && e.target.classList.contains('remove-item')){
+              const item = e.target.closest('.formset-item');
+              if(!item) return;
+              const delField = item.querySelector('input[type="checkbox"][name^="' + prefix + '-"][name$="-DELETE"]');
+              if(delField){ delField.checked = true; }
+              item.style.display = 'none';
+            }
+          });
+
           addBtn.addEventListener('click', function(){
             const idx = parseInt(totalEl.value, 10);
             const html = emptyHtml.replace(/__prefix__/g, idx);
             const wrapper = document.createElement('div');
             wrapper.className = 'formset-item';
             wrapper.innerHTML = html;
+            const delLabel = wrapper.querySelector('input[name$="-DELETE"]');
+            if(delLabel){ delLabel.parentElement && (delLabel.parentElement.style.display = 'none'); }
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-link text-danger remove-item';
+            btn.dataset.prefix = prefix;
+            btn.textContent = 'Remove';
+            wrapper.appendChild(btn);
+
             container.appendChild(wrapper);
             totalEl.value = idx + 1;
           });
         })();
         </script>
-        <small>Format options: JSON array OR simple lines using "|" per item. Example line: State Univ | BSc CS | 2016-2020</small>
-        </div>
         
         <div class="form-section">
             <h2>Projects</h2>
@@ -152,7 +195,8 @@
                     <label>Technologies</label>{{ f.technologies }}
                     <label>Status</label>{{ f.status }}
                     {% if proj_formset.can_delete %}
-                    <label>Remove</label>{{ f.DELETE }}
+                    <span style="display:none;">{{ f.DELETE }}</span>
+                    <button type="button" class="btn btn-link text-danger remove-item" data-prefix="proj">Remove</button>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -166,19 +210,37 @@
           const addBtn = document.getElementById('add-proj');
           const totalEl = document.querySelector('input[name="' + prefix + '-TOTAL_FORMS"]');
           const emptyHtml = `{{ proj_formset.empty_form.as_p|escapejs }}`;
+
+          container.addEventListener('click', function(e){
+            if(e.target && e.target.classList.contains('remove-item')){
+              const item = e.target.closest('.formset-item');
+              if(!item) return;
+              const delField = item.querySelector('input[type="checkbox"][name^="' + prefix + '-"][name$="-DELETE"]');
+              if(delField){ delField.checked = true; }
+              item.style.display = 'none';
+            }
+          });
+
           addBtn.addEventListener('click', function(){
             const idx = parseInt(totalEl.value, 10);
             const html = emptyHtml.replace(/__prefix__/g, idx);
             const wrapper = document.createElement('div');
             wrapper.className = 'formset-item';
             wrapper.innerHTML = html;
+            const delLabel = wrapper.querySelector('input[name$="-DELETE"]');
+            if(delLabel){ delLabel.parentElement && (delLabel.parentElement.style.display = 'none'); }
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-link text-danger remove-item';
+            btn.dataset.prefix = prefix;
+            btn.textContent = 'Remove';
+            wrapper.appendChild(btn);
+
             container.appendChild(wrapper);
             totalEl.value = idx + 1;
           });
         })();
         </script>
-        <small>Format options: JSON array OR simple lines using "|" per item. Example line: Portfolio Site | Personal site | React, Node.js</small>
-        </div>
         
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Save Changes</button>

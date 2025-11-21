@@ -33,15 +33,15 @@ class CVForm(forms.ModelForm):
             }),
             'experience': forms.Textarea(attrs={
                 'rows': 6,
-                'placeholder': 'JSON format: [{"company": "ABC Corp", "position": "Developer", "duration": "2020-2023", "description": "Developed features..."}]'
+                'placeholder': 'Either JSON array OR simple lines, one per item:\nCompany | Position | Duration | Description\nABC Corp | Developer | 2020-2023 | Built features...'
             }),
             'education': forms.Textarea(attrs={
                 'rows': 4,
-                'placeholder': 'JSON format: [{"institution": "University", "degree": "BS Computer Science", "duration": "2016-2020"}]'
+                'placeholder': 'Either JSON array OR simple lines, one per item:\nInstitution | Degree | Duration\nState Univ | BSc CS | 2016-2020'
             }),
             'projects': forms.Textarea(attrs={
                 'rows': 4,
-                'placeholder': 'JSON format: [{"name": "Project Name", "description": "Description...", "technologies": "React, Node.js"}]'
+                'placeholder': 'Either JSON array OR simple lines, one per item:\nName | Description | Technologies\nPortfolio Site | Personal site | React, Node.js'
             }),
         }
 
@@ -49,30 +49,61 @@ class CVForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['template'].queryset = CVTemplate.objects.filter(active=True)
 
-    def _validate_json_list(self, value, field_label):
-        """
-        Validate that value is either empty or a JSON array (list). Returns normalized JSON string.
-        """
+    def _try_parse_json_list(self, value, field_label):
         if not value:
-            return value
+            return []
         try:
             parsed = json.loads(value)
-        except json.JSONDecodeError as e:
-            raise ValidationError(
-                f"{field_label} must be valid JSON. Example: [{{\"key\": \"value\"}}]. Error: {e.msg}")
-        if not isinstance(parsed, list):
+            if isinstance(parsed, list):
+                return parsed
             raise ValidationError(f"{field_label} must be a JSON array (e.g., [{{...}}, {{...}}]).")
-        # Normalize to a compact JSON string to keep storage consistent
-        return json.dumps(parsed, ensure_ascii=False)
+        except json.JSONDecodeError:
+            return None  # Not JSON; caller may try simple parsing
+
+    def _parse_pipe_lines(self, value, fields, field_label):
+        items = []
+        for line in value.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            parts = [p.strip() for p in line.split('|')]
+            # Pad/truncate to expected length
+            if len(parts) < len(fields):
+                parts += [''] * (len(fields) - len(parts))
+            elif len(parts) > len(fields):
+                parts = parts[:len(fields)]
+            item = {fname: parts[i] for i, fname in enumerate(fields)}
+            items.append(item)
+        if not items and value.strip():
+            raise ValidationError(f"{field_label} format: use 'A | B | C | ...' per line, or provide a JSON array.")
+        return items
+
+    def _normalize_to_json(self, items):
+        return json.dumps(items, ensure_ascii=False)
 
     def clean_experience(self):
         value = self.cleaned_data.get('experience', '')
-        return self._validate_json_list(value, 'Experience')
+        if not value:
+            return ''
+        parsed = self._try_parse_json_list(value, 'Experience')
+        if parsed is None:
+            parsed = self._parse_pipe_lines(value, ['company', 'position', 'duration', 'description'], 'Experience')
+        return self._normalize_to_json(parsed)
 
     def clean_education(self):
         value = self.cleaned_data.get('education', '')
-        return self._validate_json_list(value, 'Education')
+        if not value:
+            return ''
+        parsed = self._try_parse_json_list(value, 'Education')
+        if parsed is None:
+            parsed = self._parse_pipe_lines(value, ['institution', 'degree', 'duration'], 'Education')
+        return self._normalize_to_json(parsed)
 
     def clean_projects(self):
         value = self.cleaned_data.get('projects', '')
-        return self._validate_json_list(value, 'Projects')
+        if not value:
+            return ''
+        parsed = self._try_parse_json_list(value, 'Projects')
+        if parsed is None:
+            parsed = self._parse_pipe_lines(value, ['name', 'description', 'technologies'], 'Projects')
+        return self._normalize_to_json(parsed)

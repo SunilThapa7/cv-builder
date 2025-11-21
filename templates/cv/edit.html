@@ -63,22 +63,25 @@
         <div class="form-section">
             <h2>Experience</h2>
             {{ form.experience.errors }}
-            <label>Work Experience (JSON format)</label>
+            <label>Work Experience</label>
             {{ form.experience }}
+            <small>Format options: JSON array OR simple lines using "|" per item. Example line: ABC Corp | Developer | 2020-2023 | Built features...</small>
         </div>
         
         <div class="form-section">
             <h2>Education</h2>
             {{ form.education.errors }}
-            <label>Education (JSON format)</label>
+            <label>Education</label>
             {{ form.education }}
+            <small>Format options: JSON array OR simple lines using "|" per item. Example line: State Univ | BSc CS | 2016-2020</small>
         </div>
         
         <div class="form-section">
             <h2>Projects</h2>
             {{ form.projects.errors }}
-            <label>Projects (JSON format)</label>
+            <label>Projects</label>
             {{ form.projects }}
+            <small>Format options: JSON array OR simple lines using "|" per item. Example line: Portfolio Site | Personal site | React, Node.js</small>
         </div>
         
         <div class="form-actions">

@@ -31,79 +31,37 @@ class CVForm(forms.ModelForm):
                 'rows': 3,
                 'placeholder': 'Python, Django, JavaScript, React, SQL'
             }),
-            'experience': forms.Textarea(attrs={
-                'rows': 6,
-                'placeholder': 'Either JSON array OR simple lines, one per item:\nCompany | Position | Duration | Description\nABC Corp | Developer | 2020-2023 | Built features...'
-            }),
-            'education': forms.Textarea(attrs={
-                'rows': 4,
-                'placeholder': 'Either JSON array OR simple lines, one per item:\nInstitution | Degree | Duration\nState Univ | BSc CS | 2016-2020'
-            }),
-            'projects': forms.Textarea(attrs={
-                'rows': 4,
-                'placeholder': 'Either JSON array OR simple lines, one per item:\nName | Description | Technologies\nPortfolio Site | Personal site | React, Node.js'
-            }),
+            # Hidden in UI; we will populate these from structured formsets in the view
+            'experience': forms.Textarea(attrs={'rows': 1, 'style': 'display:none;'}),
+            'education': forms.Textarea(attrs={'rows': 1, 'style': 'display:none;'}),
+            'projects': forms.Textarea(attrs={'rows': 1, 'style': 'display:none;'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['template'].queryset = CVTemplate.objects.filter(active=True)
+        # Ensure these are optional since we populate them programmatically
+        self.fields['experience'].required = False
+        self.fields['education'].required = False
+        self.fields['projects'].required = False
 
-    def _try_parse_json_list(self, value, field_label):
-        if not value:
-            return []
-        try:
-            parsed = json.loads(value)
-            if isinstance(parsed, list):
-                return parsed
-            raise ValidationError(f"{field_label} must be a JSON array (e.g., [{{...}}, {{...}}]).")
-        except json.JSONDecodeError:
-            return None  # Not JSON; caller may try simple parsing
 
-    def _parse_pipe_lines(self, value, fields, field_label):
-        items = []
-        for line in value.splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            parts = [p.strip() for p in line.split('|')]
-            # Pad/truncate to expected length
-            if len(parts) < len(fields):
-                parts += [''] * (len(fields) - len(parts))
-            elif len(parts) > len(fields):
-                parts = parts[:len(fields)]
-            item = {fname: parts[i] for i, fname in enumerate(fields)}
-            items.append(item)
-        if not items and value.strip():
-            raise ValidationError(f"{field_label} format: use 'A | B | C | ...' per line, or provide a JSON array.")
-        return items
+class ExperienceItemForm(forms.Form):
+    company = forms.CharField(max_length=200, required=False)
+    position = forms.CharField(max_length=200, required=False)
+    duration = forms.CharField(max_length=200, required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
 
-    def _normalize_to_json(self, items):
-        return json.dumps(items, ensure_ascii=False)
 
-    def clean_experience(self):
-        value = self.cleaned_data.get('experience', '')
-        if not value:
-            return ''
-        parsed = self._try_parse_json_list(value, 'Experience')
-        if parsed is None:
-            parsed = self._parse_pipe_lines(value, ['company', 'position', 'duration', 'description'], 'Experience')
-        return self._normalize_to_json(parsed)
+class EducationItemForm(forms.Form):
+    institution = forms.CharField(max_length=200, required=False)
+    degree = forms.CharField(max_length=200, required=False)
+    duration = forms.CharField(max_length=200, required=False)
+    status = forms.CharField(max_length=100, required=False)
 
-    def clean_education(self):
-        value = self.cleaned_data.get('education', '')
-        if not value:
-            return ''
-        parsed = self._try_parse_json_list(value, 'Education')
-        if parsed is None:
-            parsed = self._parse_pipe_lines(value, ['institution', 'degree', 'duration'], 'Education')
-        return self._normalize_to_json(parsed)
 
-    def clean_projects(self):
-        value = self.cleaned_data.get('projects', '')
-        if not value:
-            return ''
-        parsed = self._try_parse_json_list(value, 'Projects')
-        if parsed is None:
-            parsed = self._parse_pipe_lines(value, ['name', 'description', 'technologies'], 'Projects')
-        return self._normalize_to_json(parsed)
+class ProjectItemForm(forms.Form):
+    name = forms.CharField(max_length=200, required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    technologies = forms.CharField(max_length=200, required=False)
+    status = forms.CharField(max_length=100, required=False)

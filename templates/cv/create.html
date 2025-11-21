@@ -62,27 +62,117 @@
         
         <div class="form-section">
             <h2>Experience</h2>
-            {{ form.experience.errors }}
-            <label>Work Experience</label>
-            {{ form.experience }}
-            <small>Format options: JSON array OR simple lines using "|" per item. Example line: ABC Corp | Developer | 2020-2023 | Built features...</small>
+            {{ exp_formset.management_form }}
+            <div id="exp-forms">
+                {% for f in exp_formset %}
+                <div class="formset-item">
+                    {{ f.non_field_errors }}
+                    <label>Company</label>{{ f.company }}
+                    <label>Position</label>{{ f.position }}
+                    <label>Duration</label>{{ f.duration }}
+                    <label>Description</label>{{ f.description }}
+                    {% if exp_formset.can_delete %}
+                    <label>Remove</label>{{ f.DELETE }}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="btn btn-secondary" id="add-exp">Add Experience</button>
         </div>
+        <script>
+        (function(){
+          const prefix = 'exp';
+          const container = document.getElementById('exp-forms');
+          const addBtn = document.getElementById('add-exp');
+          const totalEl = document.querySelector('input[name="' + prefix + '-TOTAL_FORMS"]');
+          const emptyHtml = `{{ exp_formset.empty_form.as_p|escapejs }}`;
+          addBtn.addEventListener('click', function(){
+            const idx = parseInt(totalEl.value, 10);
+            const html = emptyHtml.replace(/__prefix__/g, idx);
+            const wrapper = document.createElement('div');
+            wrapper.className = 'formset-item';
+            wrapper.innerHTML = html;
+            container.appendChild(wrapper);
+            totalEl.value = idx + 1;
+          });
+        })();
+        </script>
         
         <div class="form-section">
             <h2>Education</h2>
-            {{ form.education.errors }}
-            <label>Education</label>
-            {{ form.education }}
-            <small>Format options: JSON array OR simple lines using "|" per item. Example line: State Univ | BSc CS | 2016-2020</small>
+            {{ edu_formset.management_form }}
+            <div id="edu-forms">
+                {% for f in edu_formset %}
+                <div class="formset-item">
+                    {{ f.non_field_errors }}
+                    <label>Institution</label>{{ f.institution }}
+                    <label>Degree</label>{{ f.degree }}
+                    <label>Duration</label>{{ f.duration }}
+                    <label>Status</label>{{ f.status }}
+                    {% if edu_formset.can_delete %}
+                    <label>Remove</label>{{ f.DELETE }}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="btn btn-secondary" id="add-edu">Add Education</button>
         </div>
+        <script>
+        (function(){
+          const prefix = 'edu';
+          const container = document.getElementById('edu-forms');
+          const addBtn = document.getElementById('add-edu');
+          const totalEl = document.querySelector('input[name="' + prefix + '-TOTAL_FORMS"]');
+          const emptyHtml = `{{ edu_formset.empty_form.as_p|escapejs }}`;
+          addBtn.addEventListener('click', function(){
+            const idx = parseInt(totalEl.value, 10);
+            const html = emptyHtml.replace(/__prefix__/g, idx);
+            const wrapper = document.createElement('div');
+            wrapper.className = 'formset-item';
+            wrapper.innerHTML = html;
+            container.appendChild(wrapper);
+            totalEl.value = idx + 1;
+          });
+        })();
+        </script>
         
         <div class="form-section">
             <h2>Projects</h2>
-            {{ form.projects.errors }}
-            <label>Projects</label>
-            {{ form.projects }}
-            <small>Format options: JSON array OR simple lines using "|" per item. Example line: Portfolio Site | Personal site | React, Node.js</small>
+            {{ proj_formset.management_form }}
+            <div id="proj-forms">
+                {% for f in proj_formset %}
+                <div class="formset-item">
+                    {{ f.non_field_errors }}
+                    <label>Name</label>{{ f.name }}
+                    <label>Description</label>{{ f.description }}
+                    <label>Technologies</label>{{ f.technologies }}
+                    <label>Status</label>{{ f.status }}
+                    {% if proj_formset.can_delete %}
+                    <label>Remove</label>{{ f.DELETE }}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="btn btn-secondary" id="add-proj">Add Project</button>
         </div>
+        <script>
+        (function(){
+          const prefix = 'proj';
+          const container = document.getElementById('proj-forms');
+          const addBtn = document.getElementById('add-proj');
+          const totalEl = document.querySelector('input[name="' + prefix + '-TOTAL_FORMS"]');
+          const emptyHtml = `{{ proj_formset.empty_form.as_p|escapejs }}`;
+          addBtn.addEventListener('click', function(){
+            const idx = parseInt(totalEl.value, 10);
+            const html = emptyHtml.replace(/__prefix__/g, idx);
+            const wrapper = document.createElement('div');
+            wrapper.className = 'formset-item';
+            wrapper.innerHTML = html;
+            container.appendChild(wrapper);
+            totalEl.value = idx + 1;
+          });
+        })();
+        </script>
         
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Create CV</button>
